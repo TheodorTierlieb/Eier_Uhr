@@ -5,7 +5,6 @@
 #include <Adafruit_SSD1306.h>
 #include "RTClib.h"
 #include <WiFi.h>
-#include <ESPAsyncWebServer.h>
 
 
 void connectToWiFi();
@@ -22,16 +21,13 @@ RTC_DS3231 rtc;
 #define PIN_T4 16 // Zusätzlicher Taster T4
 #define PIN_BUZZER 13 // Buzzer-Pin
 
-const char* ssid = "IhrWLANSSID";
-const char* password = "IhrWLANPasswort";
+const char* ssid = "iPhone von Niklas";
+const char* password = "krausederlelek";
 
 
 RotaryEncoder encoder(PIN_A, PIN_B, RotaryEncoder::LatchMode::FOUR3);
- 
 
-AsyncWebServer server(80); 
-
-#define MENU_ANZ 10 // 10 Menüeinträge
+#define MENU_ANZ 11 // 10 Menüeinträge
 char *menu[] =
 {
   "Eier weich",
@@ -44,6 +40,7 @@ char *menu[] =
   "Videospiele",
   "Teig ruhen",
   "Yogaübungen",
+  "WLAN"
 };
  
 unsigned long subMenuTimes[] =
@@ -306,7 +303,7 @@ void loop()
       {
         displayStart += MENU_ANZ;
       }
-      for (int i = 0; i < 10; ++i)
+      for (int i = 0; i < MENU_ANZ; ++i)
       {
         int index = (displayStart + i) % MENU_ANZ;
         if (i == 0)
