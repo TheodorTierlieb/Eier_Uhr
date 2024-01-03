@@ -4,12 +4,9 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "RTClib.h"
-#include <WiFi.h>
+#include "wlan.h"
 
-
-void connectToWiFi();
-void startAccessPoint();
-void changeWiFiCredentials(const char* newSSID, const char* newPassword);
+using namespace wlan;
 
 RTC_DS3231 rtc;
 
@@ -20,9 +17,6 @@ RTC_DS3231 rtc;
 #define PIN_T3 33 // Encoder-Taster
 #define PIN_T4 16 // Zusätzlicher Taster T4
 #define PIN_BUZZER 13 // Buzzer-Pin
-
-const char* ssid = "iPhone von Niklas";
-const char* password = "krausederlelek";
 
 
 RotaryEncoder encoder(PIN_A, PIN_B, RotaryEncoder::LatchMode::FOUR3);
@@ -182,7 +176,7 @@ void setup()
   Serial.begin(115200);
   Serial.println("Einfaches Beispiel zum Rotary Encoder");
  
- connectToWiFi();  // Verbindung zum WLAN herstellen
+  wlan::connectToWiFi();  // Verbindung zum WLAN herstellen
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
   {
@@ -198,31 +192,6 @@ void setup()
   rtc.adjust(DateTime(__DATE__, __TIME__));
   showDateTime();
 }
-
-void connectToWiFi(){
-  WiFi.begin(ssid, password);
-  Serial.print("Verbindung zum WLAN...");
-  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.print(".");
-  }
-
-  Serial.println("\nVerbunden! IP-Adresse: " + WiFi.localIP().toString());
-}
-
-void startAccessPoint() {
-  WiFi.softAP("ESP32-AP", "Passwort123");
-  Serial.println("ESP32 erstellt ein eigenes WLAN. SSID: ESP32-AP, Passwort: Passwort123");
-  Serial.println("IP-Adresse im AP-Modus: " + WiFi.softAPIP().toString());
-}
-
-void changeWiFiCredentials(const char* newSSID, const char* newPassword) {
-  WiFi.disconnect();
-  delay(1000);
-  WiFi.begin(newSSID, newPassword);
-  Serial.println("Verbindung zum neuen WLAN wird hergestellt...");
-} 
 
 static long pos = 0;
 int t1Counter = 0;
