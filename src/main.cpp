@@ -350,11 +350,11 @@ void loop()
     {
       // Auswahl von "Eier weich" aus dem Menü
       t1Counter = 0;
-      showSubMenu(0); // Zeige das Untermenü für "Eier weich"
+      showSubMenu(newPos); // Zeige das Untermenü für "Eier weich"
       countDownActive = true;
       countDownStartTime = millis();
-      countDownDuration = subMenuTimes[0] * 1000; // Starte den Countdown für "Eier weich"
-      strcpy(currentMenuItem, menu[0]); // Speichere den Namen des Menüpunkts
+      countDownDuration = subMenuTimes[newPos] * 1000; // Starte den Countdown für "Eier weich"
+      strcpy(currentMenuItem, menu[newPos]); // Speichere den Namen des Menüpunkts
     }
   }
  
