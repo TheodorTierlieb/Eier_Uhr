@@ -3,10 +3,11 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include "RTClib.h"
 #include "wlan.h"
+#include "RTClib.h"
+#include "webserver.h"
 
-using namespace wlan;
+
 
 RTC_DS3231 rtc;
 
@@ -170,13 +171,16 @@ void showDateTime() // Zeige das aktuelle Datum und die Uhrzeit auf dem OLED-Dis
  
 void setup()
 {
+  
+  
+
   pinMode(PIN_T3, INPUT_PULLUP);
   pinMode(PIN_T4, INPUT_PULLDOWN); // Zusätzlicher Taster T4
   pinMode(PIN_BUZZER, OUTPUT); // Buzzer-Pin als Ausgang festlegen
   Serial.begin(115200);
   Serial.println("Einfaches Beispiel zum Rotary Encoder");
  
-  wlan::connectToWiFi();  // Verbindung zum WLAN herstellen
+  connectToWiFi();  // Verbindung zum WLAN herstellen
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
   {
@@ -348,12 +352,12 @@ void loop()
  
     if (t1Counter == 2)
     {
-      // Auswahl von "Eier weich" aus dem Menü
+      // Auswahl von dem aktuellen Eintrag aus dem Menü
       t1Counter = 0;
-      showSubMenu(newPos); // Zeige das Untermenü für "Eier weich"
+      showSubMenu(newPos); // Zeige das Untermenü für den aktuellen Eintrag aus dem Menü
       countDownActive = true;
       countDownStartTime = millis();
-      countDownDuration = subMenuTimes[newPos] * 1000; // Starte den Countdown für "Eier weich"
+      countDownDuration = subMenuTimes[newPos] * 1000;
       strcpy(currentMenuItem, menu[newPos]); // Speichere den Namen des Menüpunkts
     }
   }
