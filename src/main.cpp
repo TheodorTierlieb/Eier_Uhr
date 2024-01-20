@@ -171,9 +171,6 @@ void showDateTime() // Zeige das aktuelle Datum und die Uhrzeit auf dem OLED-Dis
  
 void setup()
 {
-  
-  
-
   pinMode(PIN_T3, INPUT_PULLUP);
   pinMode(PIN_T4, INPUT_PULLDOWN); // Zusätzlicher Taster T4
   pinMode(PIN_BUZZER, OUTPUT); // Buzzer-Pin als Ausgang festlegen
@@ -181,6 +178,8 @@ void setup()
   Serial.println("Einfaches Beispiel zum Rotary Encoder");
  
   connectToWiFi();  // Verbindung zum WLAN herstellen
+
+  startWebserver(menu, subMenuTimes, 10); // Startet Webserver
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
   {
