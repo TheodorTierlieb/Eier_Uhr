@@ -16,7 +16,6 @@ RTC_DS3231 rtc;
 #define PIN_T1 2  // Schnellzugriff Programm 1
 #define PIN_T2 4  // Schnellzugriff Programm 8
 #define PIN_T3 33 // Encoder-Taster
-#define PIN_T4 16 // Zusätzlicher Taster T4
 #define PIN_BUZZER 13 // Buzzer-Pin
 
 
@@ -172,7 +171,6 @@ void showDateTime() // Zeige das aktuelle Datum und die Uhrzeit auf dem OLED-Dis
 void setup()
 {
   pinMode(PIN_T3, INPUT_PULLUP);
-  pinMode(PIN_T4, INPUT_PULLDOWN); // Zusätzlicher Taster T4
   pinMode(PIN_BUZZER, OUTPUT); // Buzzer-Pin als Ausgang festlegen
   Serial.begin(115200);
   Serial.println("Einfaches Beispiel zum Rotary Encoder");
@@ -310,40 +308,7 @@ void loop()
       digitalWrite(PIN_BUZZER, HIGH); // Buzzer ausschalten
     }
   }
- 
-  if (digitalRead(PIN_T4) == HIGH)
-  {
-    t4Counter++;
-    delay(200); // Entprellung
- 
-    if (t4Counter == 2)
-    {
-      t4Counter = 0;
-      if (!isSettingTime)
-      {
-        // Starte die Zeiteinstellung über den Rotary Encoder
-        isSettingTime = true;
-        setTimeDuration = 0;
-        lastEncoderPosition = 0;
-        display.clearDisplay();
-        display.setTextSize(1);
-        display.setTextColor(SSD1306_WHITE);
-        display.setCursor(0, 0);
-        display.println("Einstellen: 00:00:00");
-        display.display();
-      }
-      else
-      {
-        // Starte den Timer mit der eingestellten Zeit
-        showSubMenu(0); // Zeige das Untermenü für "Eier weich" (kann angepasst werden)
-        countDownActive = true;
-        countDownStartTime = millis();
-        countDownDuration = setTimeDuration * 1000;
-        strcpy(currentMenuItem, menu[0]); // Speichere den Namen des Menüpunkts
-      }
-    }
-  }
- 
+
   if (digitalRead(PIN_T1) == HIGH)
   {
     t1Counter++;
@@ -353,11 +318,11 @@ void loop()
     {
       // Auswahl von dem aktuellen Eintrag aus dem Menü
       t1Counter = 0;
-      showSubMenu(newPos); // Zeige das Untermenü für den aktuellen Eintrag aus dem Menü
+      showSubMenu(0); // Zeige das Untermenü für den aktuellen Eintrag aus dem Menü
       countDownActive = true;
       countDownStartTime = millis();
-      countDownDuration = subMenuTimes[newPos] * 1000;
-      strcpy(currentMenuItem, menu[newPos]); // Speichere den Namen des Menüpunkts
+      countDownDuration = subMenuTimes[0] * 1000;
+      strcpy(currentMenuItem, menu[0]); // Speichere den Namen des Menüpunkts
     }
   }
  

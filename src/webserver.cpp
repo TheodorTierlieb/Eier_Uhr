@@ -13,7 +13,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Eier Uhr</title>
+    <title>Tick Tick Ei</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -24,7 +24,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   </style>
   <body>
     <center>
-      <h2>Eier Uhr</h2>
+      <h2>Tick Tick Ei</h2>
       <table>
         <tr>
           <th>Timer</th>

@@ -4,7 +4,8 @@
 const char* ssid = "iPhone von Niklas";
 const char* password = "krausederlelek";
 
-void connectToWiFi(){
+void connectToWiFi()
+{
   WiFi.begin(ssid, password);
   Serial.print("Verbindung zum WLAN...");
   
@@ -22,13 +23,15 @@ void connectToWiFi(){
   
 }
 
-void startAccessPoint() {
+void startAccessPoint() 
+{
   WiFi.softAP("ESP32-AP", "Passwort123");
   Serial.println("ESP32 erstellt ein eigenes WLAN. SSID: ESP32-AP, Passwort: Passwort123");
   Serial.println("IP-Adresse im AP-Modus: " + WiFi.softAPIP().toString());
 }
 
-void changeWiFiCredentials(const char* newSSID, const char* newPassword) {
+void changeWiFiCredentials(const char* newSSID, const char* newPassword) 
+{
   WiFi.disconnect();
   delay(1000);
   WiFi.begin(newSSID, newPassword);
