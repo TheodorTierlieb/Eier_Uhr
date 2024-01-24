@@ -37,17 +37,17 @@ const char index_html[] PROGMEM = R"rawliteral(
   </body>
 </html> )rawliteral";
 
-void notFound(AsyncWebServerRequest *request) 
+void notFound(AsyncWebServerRequest *request)
 {
   request->send(404, "text/plain", "The page not found");
 }
 
-String processor(const String& var)
+String processor(const String &var)
 {
-  if(var == "TIMERPLACEHOLDER")
+  if (var == "TIMERPLACEHOLDER")
   {
     String zeilen = "";
-    for (int i = 0; i <webMenLength; i++)
+    for (int i = 0; i < webMenLength; i++)
     {
       zeilen += "<tr><td>" + webMenu[i] + "</td><td>" + String(webSubMenuTimes[i]) + "</td></tr>";
     }
@@ -59,21 +59,18 @@ String processor(const String& var)
 void startWebserver(char *menu[], unsigned long *subMenuTimes, int menLength)
 {
 
-Serial.println("starting Webserver");
+  Serial.println("starting Webserver");
 
   webMenLength = menLength;
-  
-  for (int i = 0; i < menLength; i++) 
+
+  for (int i = 0; i < menLength; i++)
   {
     webMenu[i] = String(menu[i]);
     webSubMenuTimes[i] = subMenuTimes[i];
   }
 
-
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-  {
-    request->send_P(200, "text/html", index_html, processor);
-  });
+            { request->send_P(200, "text/html", index_html, processor); });
 
   server.onNotFound(notFound);
 
